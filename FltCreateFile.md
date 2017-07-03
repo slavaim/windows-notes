@@ -19,6 +19,11 @@
 0c ffffe101`3ffff6b0 fffff801`9213058b nt!IopParseDevice+0x7f0
 0d ffffe101`3ffff880 fffff801`921340c0 nt!ObpLookupObjectName+0x46b
 0e ffffe101`3ffffa50 fffff801`920c9e90 nt!ObOpenObjectByNameEx+0x1e0
+```
+
+After ```FltCreateFile``` returned :
+
+```
 
 0: kd> dt nt!_FILE_OBJECT ffff948c621a3330
    +0x000 Type             : 0n5
