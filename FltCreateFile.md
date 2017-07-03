@@ -1,6 +1,6 @@
 
 
-```FltCreateFile``` calls IoCreateFileEx with ```IO_DRIVER_CREATE_CONTEXT.DeviceObjectHint``` pointing to the Filter Manager's filter object and then calls the lower registered filters. That allows the created file object to have ```IOP_FILE_OBJECT_EXTENSION.TopDeviceObjectHint``` pointing to the Filetr Manager's object.
+```FltCreateFile``` calls IoCreateFileEx with ```IO_DRIVER_CREATE_CONTEXT.DeviceObjectHint``` pointing to the Filter Manager's filter object and then calls the lower registered filters. That allows the created file object to have ```TopDeviceObjectHint``` pointing to the Filetr Manager's object. Below is a debug session for Windows 10 1703.
 
 ```
  # Child-SP          RetAddr           Call Site
