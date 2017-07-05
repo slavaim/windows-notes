@@ -1,5 +1,5 @@
 
-An example of a recursion with write callback in a call from FltWriteFile in a post-create callback. Avscan filter called FltWriteFile that called a write callback which called CcCopyWrite for a file with pass-through caching policy which resulted in a recursive data flush and calling the write callback for paging IO.
+An example of a recursion with write IO in a call from FltWriteFile in a post-create callback. Avscan filter called FltWriteFile that called a write callback which called CcCopyWrite for a file with pass-through caching policy which resulted in a recursive data flush and calling the write dispatch in the Filter Manager for paging IO.
 
 ```
 1: kd> kn
