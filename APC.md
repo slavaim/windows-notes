@@ -36,7 +36,7 @@ KiInsertQueueApc (
 ```
 
 Prior to calling ```KiApcInterrupt``` a CPU and the kernel creates a frame on the stack that contains register state for interrupted thread.
-As you can se on the eample below there is no call to KiApcInterrupt from the interrupted function ( ironicaly KiDeliverApc here but can be any ) so this is an interrupt.
+As you can see in the example below there is no call to KiApcInterrupt from the interrupted function ( ironicaly KiDeliverApc here but can be any ) so this is an interrupt.
 ```
 1: kd> kn
  # Child-SP          RetAddr           Call Site
