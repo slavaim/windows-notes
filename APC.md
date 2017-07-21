@@ -35,8 +35,8 @@ KiInsertQueueApc (
      }
 ```
 
-Prior to calling ```KiApcInterrupt``` a CPU and the kernel creates a frame on the stack that contains register state for interrupted thread.
-As you can see in the example below there is no call to KiApcInterrupt from the interrupted function ( ironicaly KiDeliverApc here but can be any ) so this is an interrupt.
+Prior to calling ```KiApcInterrupt``` a CPU and the kernel creates a frame on a stack that contains registers state for an interrupted thread.
+As you can see in the example below there is no call to KiApcInterrupt from the interrupted function ( ironicaly KiDeliverApc here but can be any ) so this is a genuine interrupt.
 ```
 1: kd> kn
  # Child-SP          RetAddr           Call Site
@@ -46,14 +46,14 @@ As you can see in the example below there is no call to KiApcInterrupt from the 
 03 ffff9781`aa9fd6f0 fffff800`32ab06b7 nt!KiCommitThreadWait+0x101
 
 fffff800`32ab44e3 33c0            xor     eax,eax
-fffff800`32ab44e5 440f22c0        mov     cr8,rax
+fffff800`32ab44e5 440f22c0        mov     cr8,rax <-- no call to KiApcInterrupt, the code was interrupted after this instruction
 fffff800`32ab44e9 4c8b45e8        mov     r8,qword ptr [rbp-18h] <-- return address
 fffff800`32ab44ed 488b55f0        mov     rdx,qword ptr [rbp-10h]
 fffff800`32ab44f1 488b4df8        mov     rcx,qword ptr [rbp-8]
 fffff800`32ab44f5 488b45e0        mov     rax,qword ptr [rbp-20h]
 ```
 
-Some notes on APC damaging the stack if a caller failes to wait for IRP completion in case of STATUS_PENDING returned by ```IoCallDriver```. Completion APC can change a registers frame pushed on a thread stack during interrupt processing, e.g. to deliver APC by invoking KiApcInterrupt through LAPC. The other scenario that was met in practice when the RDI register had its lower part zeroed is outlined below ( details here http://www.osronline.com/cf.cfm?PageURL=showThread.CFM?link=285110 )
+Some notes on APC damaging a stack if a caller failes to wait for IRP completion in case of STATUS_PENDING returned by ```IoCallDriver```. Completion APC can change a registers frame pushed on a thread stack during interrupt processing, e.g. to deliver APC by invoking KiApcInterrupt through LAPC. The other scenario that was met in practice when the RDI register had its lower part zeroed is outlined below ( details here http://www.osronline.com/cf.cfm?PageURL=showThread.CFM?link=285110 )
 
 ```
 KiDeliverApc()
